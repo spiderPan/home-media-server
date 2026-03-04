@@ -1,0 +1,57 @@
+# Data and Media (DO NOT SHARE)
+data/
+data/media/
+data/torrents/
+
+# Databases and related files
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-journal
+*.bak
+
+# Logs, Caches, and Backups
+**/logs/
+**/Backups/
+**/BT_backup/
+**/*.log
+**/.cache/
+**/Sentry/
+**/MediaCover/
+**/metadata/
+**/Metadata/
+**/Cache/
+**/CrashReports/
+
+# Sensitive Configuration Files
+# It's better to provide .example files instead of the real ones
+config/**/*.xml
+config/**/*.yaml
+config/**/*.json
+config/**/*.conf
+config/**/*.txt
+config/**/*.pid
+config/**/*.lock
+config/**/*.mmdb
+config/plex/Library/
+config/prowlarr/Definitions/
+
+# Exclude hidden files in config
+config/**/.*
+
+# Exclude sensitive homepage configs
+config/homepage/*.yaml
+
+# Keep example files if you create them
+!config/**/*.example
+!config/homepage/*.example
+
+# Environment Secrets
+.env
+.env.local
+.env.*.local
+
+# OS Specific
+.DS_Store
+Thumbs.db

@@ -1,0 +1,31 @@
+---
+- Media Server:
+    - Plex:
+        icon: plex.png
+        href: http://localhost:32400/web
+        description: Watch Movies & TV
+    - Radarr:
+        icon: radarr.png
+        href: http://localhost:7878
+        description: Add New Movies
+        widget:
+          type: radarr
+          url: http://radarr:7878
+          key: {{HOMEPAGE_RADARR_KEY}}
+    - qBittorrent:
+        icon: qbittorrent.png
+        href: http://localhost:8080
+        description: View Downloads
+        widget:
+          type: qbittorrent
+          url: http://qbittorrent:8080
+          username: {{HOMEPAGE_QBIT_USER}}
+          password: {{HOMEPAGE_QBIT_PASS}}
+    - Prowlarr:
+        icon: prowlarr.png
+        href: http://localhost:9696
+        description: Manage Trackers
+        widget:
+          type: prowlarr
+          url: http://prowlarr:9696
+          key: {{HOMEPAGE_PROWLARR_KEY}}

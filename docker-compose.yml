@@ -1,0 +1,103 @@
+version: '3.8'
+
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM}
+    volumes:
+      - ./config/plex:/config
+      - ./data/media:/data/media
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-UTC}
+    volumes:
+      - ./config/radarr:/config
+      - ./data/media/movies:/movies
+      - ./data/torrents:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    networks:
+      - media-net
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-UTC}
+    volumes:
+      - ./config/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    networks:
+      - media-net
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-UTC}
+      - WEBUI_PORT=8080
+    volumes:
+      - ./config/qbittorrent:/config
+      - ./data/torrents:/downloads
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    networks:
+      - media-net
+
+  flaresolverr:
+    image: flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - TZ=${TZ:-UTC}
+    ports:
+      - 8191:8191
+    restart: unless-stopped
+    networks:
+      - media-net
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - HOMEPAGE_ALLOWED_HOSTS=${HOMEPAGE_ALLOWED_HOSTS:-localhost}
+      - HOMEPAGE_VAR_RADARR_KEY=${HOMEPAGE_RADARR_KEY}
+      - HOMEPAGE_VAR_PROWLARR_KEY=${HOMEPAGE_PROWLARR_KEY}
+      - HOMEPAGE_VAR_QBIT_USER=${HOMEPAGE_QBIT_USER}
+      - HOMEPAGE_VAR_QBIT_PASS=${HOMEPAGE_QBIT_PASS}
+    volumes:
+      - ./config/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 80:3000
+    restart: unless-stopped
+    networks:
+      - media-net
+
+networks:
+  media-net:
+    driver: bridge
