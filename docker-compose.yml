@@ -32,6 +32,23 @@ services:
     networks:
       - media-net
 
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-UTC}
+    volumes:
+      - ./config/sonarr:/config
+      - ./data/media/tv:/tv
+      - ./data/torrents:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks:
+      - media-net
+
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
