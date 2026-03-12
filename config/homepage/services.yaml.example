@@ -37,3 +37,11 @@
           type: sonarr
           url: http://sonarr:8989
           key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+    - Bazarr:
+        icon: bazarr.png
+        href: http://media.local:6767
+        description: Manage Subtitles
+        widget:
+          type: bazarr
+          url: http://bazarr:6767
+          key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"

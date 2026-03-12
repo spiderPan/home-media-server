@@ -22,6 +22,7 @@ data/torrents/
 **/metadata/
 **/Metadata/
 **/Cache/
+**/cache/
 **/CrashReports/
 
 # Sensitive Configuration Files
@@ -34,6 +35,7 @@ config/**/*.txt
 config/**/*.pid
 config/**/*.lock
 config/**/*.mmdb
+config/**/*.dat
 config/plex/Library/
 config/prowlarr/Definitions/
 

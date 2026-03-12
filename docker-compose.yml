@@ -93,6 +93,23 @@ services:
     networks:
       - media-net
 
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-UTC}
+    volumes:
+      - ./config/bazarr:/config
+      - ./data/media/movies:/movies
+      - ./data/media/tv:/tv
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+    networks:
+      - media-net
+
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
@@ -103,6 +120,7 @@ services:
       - HOMEPAGE_VAR_RADARR_KEY=${HOMEPAGE_RADARR_KEY}
       - HOMEPAGE_VAR_PROWLARR_KEY=${HOMEPAGE_PROWLARR_KEY}
       - HOMEPAGE_VAR_SONARR_KEY=${HOMEPAGE_SONARR_KEY}
+      - HOMEPAGE_VAR_BAZARR_KEY=${HOMEPAGE_BAZARR_KEY}
       - HOMEPAGE_VAR_QBIT_USER=${HOMEPAGE_QBIT_USER}
       - HOMEPAGE_VAR_QBIT_PASS=${HOMEPAGE_QBIT_PASS}
     volumes:
