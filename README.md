@@ -1,11 +1,13 @@
 # Home Media Server Stack
 
-A pre-configured, dockerized media server stack featuring media management, automated downloads, and a beautiful dashboard.
+A pre-configured, dockerized media server stack featuring media management, automated downloads, and a beautiful dashboard. Now updated to support external disk storage and automatic Chinese subtitles!
 
 ## 🚀 Included Services
 
 - **[Plex](https://www.plex.tv/)**: Media streaming and organization.
 - **[Radarr](https://radarr.video/)**: Automatic movie discovery and downloading.
+- **[Sonarr](https://sonarr.tv/)**: Automatic TV show discovery and downloading.
+- **[Bazarr](https://www.bazarr.media/)**: Subtitle manager (best for automatic Chinese captions).
 - **[Prowlarr](https://prowlarr.com/)**: Indexer manager for torrent trackers.
 - **[qBittorrent](https://www.qbittorrent.org/)**: Lightweight BitTorrent client.
 - **[FlareSolverr](https://github.com/FlareSolverr/FlareSolverr)**: Proxy server to bypass Cloudflare protection.
@@ -36,7 +38,8 @@ nano .env
 ```
 
 **Key variables to set:**
-- `PUID` & `PGID`: Run `id` in your terminal to find your user and group IDs. This ensures Docker has correct permissions for your files.
+- `MEDIA_DISK`: The absolute path to your external drive (e.g., `/media/user/MyPassport`).
+- `PUID` & `PGID`: Run `id` in your terminal to find your user and group IDs.
 - `PLEX_CLAIM`: Get your token from [plex.tv/claim](https://www.plex.tv/claim/).
 - `TZ`: Set your timezone (e.g., `Europe/London`).
 
@@ -63,25 +66,25 @@ Once the stack is running, you can access your services at the following ports:
 | **Homepage** | `80` | [http://localhost](http://localhost) |
 | **Plex** | `32400` | [http://localhost:32400/web](http://localhost:32400/web) |
 | **Radarr** | `7878` | [http://localhost:7878](http://localhost:7878) |
+| **Sonarr** | `8989` | [http://localhost:8989](http://localhost:8989) |
+| **Bazarr** | `6767` | [http://localhost:6767](http://localhost:6767) |
 | **Prowlarr** | `9696` | [http://localhost:9696](http://localhost:9696) |
 | **qBittorrent** | `8080` | [http://localhost:8080](http://localhost:8080) |
 
 ---
 
-## 📂 Directory Structure
+## 📂 Storage Structure (on External Disk)
 
-- `/config`: Persistent configuration for all services.
-- `/data/media`: Your movie and TV show library.
-- `/data/torrents`: Temporary storage for active downloads.
+The stack expects the following structure on your `${MEDIA_DISK}`:
+- `/media-server/data/media/movies`: Movie Library.
+- `/media-server/data/media/tv`: TV Library.
+- `/media-server/data/torrents`: Active download storage.
 
 ---
 
 ## 🔒 Security Note
 
 **Never commit your `.env` file or actual config files to GitHub.** They contain sensitive API keys and passwords. 
-
-- Use `.env.example` to share the required structure.
-- Ensure `.gitignore` is correctly configured to exclude sensitive files (already included in this repo).
 
 ---
 

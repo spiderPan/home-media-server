@@ -10,7 +10,7 @@ services:
       - PLEX_CLAIM=${PLEX_CLAIM}
     volumes:
       - ./config/plex:/config
-      - ./data/media:/data/media
+      - ${MEDIA_DISK}/media-server/data/media:/data/media
     restart: unless-stopped
 
   radarr:
@@ -22,8 +22,8 @@ services:
       - TZ=${TZ:-UTC}
     volumes:
       - ./config/radarr:/config
-      - ./data/media/movies:/movies
-      - ./data/torrents:/downloads
+      - ${MEDIA_DISK}/media-server/data/media/movies:/movies
+      - ${MEDIA_DISK}/media-server/data/torrents:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -39,8 +39,8 @@ services:
       - TZ=${TZ:-UTC}
     volumes:
       - ./config/sonarr:/config
-      - ./data/media/tv:/tv
-      - ./data/torrents:/downloads
+      - ${MEDIA_DISK}/media-server/data/media/tv:/tv
+      - ${MEDIA_DISK}/media-server/data/torrents:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -72,7 +72,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - ./config/qbittorrent:/config
-      - ./data/torrents:/downloads
+      - ${MEDIA_DISK}/media-server/data/torrents:/downloads
     ports:
       - 8080:8080
       - 6881:6881
@@ -96,14 +96,17 @@ services:
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
       - TZ=${TZ:-UTC}
     volumes:
       - ./config/bazarr:/config
-      - ./data/media/movies:/movies
-      - ./data/media/tv:/tv
+      - ${MEDIA_DISK}/media-server/data/media/movies:/movies
+      - ${MEDIA_DISK}/media-server/data/media/tv:/tv
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -126,6 +129,7 @@ services:
     volumes:
       - ./config/homepage:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${MEDIA_DISK}:/media/external:ro
     ports:
       - 80:3000
     restart: unless-stopped
