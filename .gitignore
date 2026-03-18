@@ -13,9 +13,12 @@ data/torrents/
 
 # Logs, Caches, and Backups
 **/logs/
+**/log/
 **/Backups/
+**/backup/
 **/BT_backup/
 **/*.log
+**/log/bazarr.log*
 **/.cache/
 **/Sentry/
 **/MediaCover/
@@ -23,7 +26,17 @@ data/torrents/
 **/Metadata/
 **/Cache/
 **/cache/
+**/restore/
 **/CrashReports/
+**/*.zip
+
+# Runtime and Lock files
+**/lockfile
+**/ipc-socket
+**/*.lock
+**/*.pid
+**/*.fastresume
+**/*.torrent
 
 # Sensitive Configuration Files
 # It's better to provide .example files instead of the real ones
@@ -32,8 +45,6 @@ config/**/*.yaml
 config/**/*.json
 config/**/*.conf
 config/**/*.txt
-config/**/*.pid
-config/**/*.lock
 config/**/*.mmdb
 config/**/*.dat
 config/plex/Library/
