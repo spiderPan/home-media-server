@@ -110,9 +110,6 @@ services:
       - ${MEDIA_DISK}/media-server/data/media/movies:/movies
       - ${MEDIA_DISK}/media-server/data/media/tv:/tv
       - ./docker/bazarr/providers/zimukuocr.py:/app/bazarr/bin/custom_libs/subliminal_patch/providers/zimuku.py
-      - ./docker/bazarr/providers/subhd.py:/app/bazarr/bin/custom_libs/subliminal_patch/providers/yifysubtitles.py
-      - ./docker/bazarr/test_subhd.py:/app/bazarr/test_subhd.py
-      - ./docker/bazarr/test_zimuku.py:/app/bazarr/test_zimuku.py
 
     ports:
       - 6767:6767
