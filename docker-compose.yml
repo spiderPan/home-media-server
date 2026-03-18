@@ -6,6 +6,7 @@ services:
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
+      - TZ=${TZ:-UTC}
       - VERSION=docker
       - PLEX_CLAIM=${PLEX_CLAIM}
     volumes:
@@ -103,12 +104,16 @@ services:
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
-      - TZ=${TZ:-UTC}desc
+      - TZ=${TZ:-UTC}
     volumes:
       - ./config/bazarr:/config
       - ${MEDIA_DISK}/media-server/data/media/movies:/movies
       - ${MEDIA_DISK}/media-server/data/media/tv:/tv
       - ./docker/bazarr/providers/zimukuocr.py:/app/bazarr/bin/custom_libs/subliminal_patch/providers/zimuku.py
+      - ./docker/bazarr/providers/subhd.py:/app/bazarr/bin/custom_libs/subliminal_patch/providers/yifysubtitles.py
+      - ./docker/bazarr/test_subhd.py:/app/bazarr/test_subhd.py
+      - ./docker/bazarr/test_zimuku.py:/app/bazarr/test_zimuku.py
+
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -121,6 +126,7 @@ services:
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
+      - TZ=${TZ:-UTC}
       - HOMEPAGE_ALLOWED_HOSTS=${HOMEPAGE_ALLOWED_HOSTS:-0.0.0.0}
       - HOMEPAGE_VAR_RADARR_KEY=${HOMEPAGE_RADARR_KEY}
       - HOMEPAGE_VAR_PROWLARR_KEY=${HOMEPAGE_PROWLARR_KEY}
