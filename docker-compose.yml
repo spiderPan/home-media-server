@@ -83,7 +83,7 @@ services:
       - media-net
 
   flaresolverr:
-    image: flaresolverr/flaresolverr:latest
+    image: 21hsmw/flaresolverr:nodriver
     container_name: flaresolverr
     environment:
       - LOG_LEVEL=info
