@@ -9,6 +9,8 @@ services:
       - TZ=${TZ:-UTC}
       - VERSION=docker
       - PLEX_CLAIM=${PLEX_CLAIM}
+    devices:
+      - /dev/dri:/dev/dri
     volumes:
       - ./config/plex:/config
       - ${MEDIA_DISK}/media-server/data/media:/data/media
